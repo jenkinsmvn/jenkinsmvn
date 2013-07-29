@@ -33,7 +33,7 @@ public class PropertyMojoTest {
 
     @Test
     public void testExecuteNoChanges() throws Exception {
-        mojo.properties.add(new Property("frontend", "leadgen-frontend"));
+        mojo.properties.add(new Property("app", "test-job"));
         mojo.execute();
 
         assertTrue(MapUtils.isEmpty(mojo.project.getProperties()));
@@ -41,8 +41,8 @@ public class PropertyMojoTest {
 
     @Test
     public void testExecuteWithChanges() throws Exception {
-        mojo.properties.add(new Property("frontend", "leadgen-frontend"));
-        mojo.project.getProperties().put("frontend", "latest");
+        mojo.properties.add(new Property("app", "test-job"));
+        mojo.project.getProperties().put("app", "5");
 
         mojo.execute();
 
@@ -51,10 +51,10 @@ public class PropertyMojoTest {
 
     @Test
     public void testExecuteWithChangesExpression() throws Exception {
-        mojo.properties.add(new Property("frontend", "$[type eq 'frontend' ? 'leadgen-frontend' : 'leadgen-frontend-qa-branch']"));
+        mojo.properties.add(new Property("app", "$[type eq 'trunk' ? 'test-job' : 'test-job-config']"));
         mojo.variables.add("type");
-        mojo.project.getProperties().put("frontend", "latest");
-        mojo.project.getProperties().put("type", "frontend-branch");
+        mojo.project.getProperties().put("app", "latest");
+        mojo.project.getProperties().put("type", "branch");
 
         mojo.execute();
 

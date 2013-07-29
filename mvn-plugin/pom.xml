@@ -18,8 +18,6 @@
   <version>1.0-SNAPSHOT</version>
   <name>jenkins-maven-plugin</name>
 
-  <!-- TODO -->
-  <!--url>http://confluence.adchemy.private:8080/display/ActionsRTB/Maven+Jenkins+Plugin</url-->
   <description>This plugin provides a facility for invoking Jenkins APIs.</description>
 
   <properties>

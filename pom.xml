@@ -150,10 +150,4 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
-  <!--scm>
-    <connection>scm:svn:http://svn.adchemy.private/repo/production/releases/adchemy-jenkins-1.0</connection>
-    <developerConnection>scm:svn:http://svn.adchemy.private/repo/production/releases/adchemy-jenkins-1.0</developerConnection>
-    <url>http://svn.adchemy.private/repo/production/releases/adchemy-jenkins-1.0</url>
-  </scm-->
 </project>
