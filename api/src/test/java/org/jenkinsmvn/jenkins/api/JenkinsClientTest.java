@@ -34,29 +34,7 @@ public class JenkinsClientTest {
 
     public static final String CI_URL = "http://localhost:8080/";
 
-//    @Test
-//    public void testEvent() throws Exception {
-//        JenkinsClient client = JenkinsClientFactory.create("http://events01.dev5.adchemy.colo:8888/", "/jenkins");
-//
-//        client.authenticate("alvin", "alvin");
-//        assertNotNull(client.getNode());
-//        Iterator<String> itr = client.getJobNames().iterator();
-//        for(int i = 0; i < 20 && itr.hasNext(); i++) {
-//            String name = itr.next();
-//
-//            try {
-//                JobDetails details = client.getJobDetails(name);
-//
-//                System.out.println(String.format("%s > size: %d", name,  details.getBuilds().size()));
-//            } catch(Exception e) {
-//                Job job = client.getJob(name);
-//
-//                throw new IllegalArgumentException(String.format("Error while parsing job '%s'.", String.valueOf(job)), e);
-//            }
-//        }
-//    }
-
-        @Test
+    @Test
     public void testJobDetailsAndBuildDetails() throws Exception {
         JenkinsClient client = JenkinsClientFactory.create(CI_URL);
 

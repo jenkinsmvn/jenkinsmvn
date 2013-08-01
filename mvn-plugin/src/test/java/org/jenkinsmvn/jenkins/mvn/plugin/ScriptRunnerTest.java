@@ -8,6 +8,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.jenkinsmvn.jenkins.mvn.plugin.handler.*;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.xml.transform.TransformerException;
@@ -26,66 +27,27 @@ import static junit.framework.Assert.*;
 /**
  * Test for {@link org.jenkinsmvn.jenkins.mvn.plugin.ScriptRunnerMojo} class.
  */
+@Ignore
 public class ScriptRunnerTest {
-    
-    public static final String DISABLE_ENABLE_JOB_NAME = "testjob";
 
-    public static final String HUDSON_URL = "http://hudson-master.adchemy.private:8080/";
+    public static final String DISABLE_ENABLE_JOB_NAME = "test-job";
 
-    public static final String ALT_SVN_PATH_1 = "http://svn.adchemy.private/repo/production/trunk/adchemy-platform/adchemy-platform-task-quartz";
+    public static final String CI_URL = "http://localhost:8080/";
 
-    public static final String ALT_SVN_PATH_2 = "http://svn.adchemy.private/repo/production/trunk/adchemy-distributed-store";
+    public static final String ALT_SVN_PATH_1 = "http://svnpath/test-project-for-auto-branching-1/";
 
-    public static final List<String> LEADGEN_JOBS = Arrays.asList(
-            "creative",
-            "server-configs-leadgen",
-            "adchemy-leadgen",
+    public static final String ALT_SVN_PATH_2 = "http://svnpath/test-project-for-auto-branching-2/";
 
-            "adchemy-leadgen-common",
-            "adchemy-leadgen-matcher-core",
-            "adchemy-leadgen-doubleclick",
-
-            "leadgen-datalayer",
-
-            "adchemy-leadgen-services",
-
-            "adchemy-leadgen-matcher-analysis",
-            "adchemy-leadgen-domain",
-
-            "leadgen-frontend",
-            "leadgen-frontend-data",
-            "adchemy-leadgen-delivery",
-            "adchemy-leadgen-services-war",
-            "adchemy-leadgen-matcher-services",
-            "adchemy-leadgen-ui",
-
-            "adchemy-leadgen-matcher-tracking",
-            "adchemy-leadgen-facebook",
-            "leadgen-adcams",
-            "adchemy-leadgen-matcher-runtime-common",
-            "adchemy-leadgen-backend",
-            "adchemy-leadgen-matcher-ui",
-            "adchemy-leadgen-matcher-schedule",
-            "adchemy-leadgen-data-processing-core",
-            "adchemy-leadgen-data-acquisition-webapp",
-            "adchemy-leadgen-data-feeder-webapp",
-            "adchemy-leadgen-data-transformation-webapp",
-            "adchemy-leadgen-partner-portal",
-            "adchemy-leadgen-leadfeedback",
-
-            "adchemy-leadgen-matcher-runtime",
-            "matcher-snapshot-builders",
-
-            "adchemy-leadgen-api",
-            "adchemy-leadgen-archive",
-            "leadgen-reporting",
-            "adchemy-leadgen-analytics"
+    public static final List<String> JOBS = Arrays.asList(
+            "job1",
+            "job2",
+            "job3"
     );
 
     private ScriptRunnerMojo createScript() throws MalformedURLException {
         ScriptRunnerMojo scriptRunner = new ScriptRunnerMojo();
 
-        scriptRunner.setJenkinsUrl(new URL(HUDSON_URL));
+        scriptRunner.setJenkinsUrl(new URL(CI_URL));
 
         return scriptRunner;
     }
@@ -145,7 +107,7 @@ public class ScriptRunnerTest {
         scriptRunner.setActions(Arrays.asList(enable, disable));
         scriptRunner.execute();
 
-        JenkinsClient client = JenkinsClientFactory.create(HUDSON_URL);
+        JenkinsClient client = JenkinsClientFactory.create(CI_URL);
 
         assertFalse("Should be disabled.", client.getJobDetails(DISABLE_ENABLE_JOB_NAME).getBuildable());
     }
@@ -174,7 +136,7 @@ public class ScriptRunnerTest {
 
     @Test
     public void testConfigureSVNAndBuildAction() throws Exception {
-        JenkinsClient client = JenkinsClientFactory.create(HUDSON_URL);
+        JenkinsClient client = JenkinsClientFactory.create(CI_URL);
 
         ConfigDocument config = client.getJobConfig(DISABLE_ENABLE_JOB_NAME);
 
@@ -233,7 +195,7 @@ public class ScriptRunnerTest {
         Action build = new Action();
 
         build.setType(TestUpstreamDependencyBuildJobActionHandler.TYPE);
-        build.setJobNames(LEADGEN_JOBS);
+        build.setJobNames(JOBS);
 
         ScriptRunnerMojo scriptRunner = createScript();
         scriptRunner.setThreads(5);
@@ -244,7 +206,7 @@ public class ScriptRunnerTest {
 
     @Test
     public void buildReferences() throws Exception {
-        String references = new ReferenceDependenciesBuilder(JenkinsClientFactory.create(HUDSON_URL)).buildDependenciesReference(LEADGEN_JOBS);
+        String references = new ReferenceDependenciesBuilder(JenkinsClientFactory.create(CI_URL)).buildDependenciesReference(JOBS);
 
         System.out.println(references);
     }
@@ -258,7 +220,7 @@ public class ScriptRunnerTest {
         verifyHttp.setJobName(DISABLE_ENABLE_JOB_NAME);
 
         Properties props = new Properties();
-        props.setProperty(URL_TO_VERIFY, "http://svn.adchemy.local/repo/production/trunk/adchemy-leadgen/notfound");
+        props.setProperty(URL_TO_VERIFY, "http://svnpath/notfound");
         props.setProperty(FAIL_ON_URL_UNVERIFIED, "true");
         props.setProperty(HTTP_AUTHORIZATION, "Basic YWRlbGVvbjp1Y244cERhag==");
 
@@ -279,7 +241,7 @@ public class ScriptRunnerTest {
         verifyHttp.setJobName(DISABLE_ENABLE_JOB_NAME);
 
         Properties props = new Properties();
-        props.setProperty(URL_TO_VERIFY, "http://svn.adchemy.local/repo/production/trunk/adchemy-leadgen/");
+        props.setProperty(URL_TO_VERIFY, "http://svnpath/");
         props.setProperty(FAIL_ON_URL_UNVERIFIED, "true");
         props.setProperty(HTTP_AUTHORIZATION, "Basic YWRlbGVvbjp1Y244cERhag==");
 

@@ -39,25 +39,25 @@ public class HandlerUtilsTest {
     public void testRegexReplacement() throws Exception {
         Action action = createAction("2.24-rc", "\\d+\\.\\d+(\\-rc)?");
 
-        String replacement = HandlerUtils.INSTANCE.getReplacement("http://svn.adchemy.private/repo/production/branches/adchemy-leadgen-2.23-rc/adchemy-leadgen-frontend", action);
+        String replacement = HandlerUtils.INSTANCE.getReplacement("http://svnpath/test-project-for-auto-branching-1-2.23-rc", action);
 
         assertEquals(
                 "not replaced.",
                 replacement,
-                "http://svn.adchemy.private/repo/production/branches/adchemy-leadgen-2.24-rc/adchemy-leadgen-frontend"
+                "http://svnpath/test-project-for-auto-branching-1-2.24-rc"
         );
     }
 
     @Test
     public void testRegexReplacementWithGroup() throws Exception {
-        Action action = createAction("2.24-rc", "adchemy-leadgen-(\\d+\\.\\d+(\\-rc)?)", "1");
+        Action action = createAction("2.24-rc", "test-project-for-auto-branching-1-(\\d+\\.\\d+(\\-rc)?)", "1");
 
-        String replacement = HandlerUtils.INSTANCE.getReplacement("http://svn.adchemy.private/repo/production/branches/adchemy-leadgen-2.23-rc/adchemy-leadgen-frontend", action);
+        String replacement = HandlerUtils.INSTANCE.getReplacement("http://svnpath/test-project-for-auto-branching-1-2.23-rc", action);
 
         assertEquals(
                 "not replaced.",
                 replacement,
-                "http://svn.adchemy.private/repo/production/branches/adchemy-leadgen-2.24-rc/adchemy-leadgen-frontend"
+                "http://svnpath/test-project-for-auto-branching-1-2.24-rc"
         );
     }
 

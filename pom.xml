@@ -32,6 +32,51 @@
     <commons.beanutils.version>1.8.3</commons.beanutils.version>
   </properties>
 
+  <licenses>
+    <license>
+      <name>Apache 2</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+      <comments>A business-friendly OSS license</comments>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Alvin R. de Leon</name>
+      <email>alvinrdeleon@me.com</email>
+    </developer>
+    <developer>
+      <name>Shiela D. Buitizon</name>
+      <email>badong2210@yahoo.com</email>
+    </developer>
+  </developers>
+
+  <distributionManagement>
+    <repository>
+      <id>sonatype-nexus-staging</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+    <snapshotRepository>
+      <id>sonatype-nexus-snapshots</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
+
+  <repositories>
+    <repository>
+      <id>jenkins-ci</id>
+      <url>http://repo.jenkins-ci.org/public/</url>
+    </repository>
+  </repositories>
+
+  <scm>
+    <connection>scm:git:https://github.com/jenkinsmvn/jenkinsmvn.git</connection>
+    <url>scm:git:https://github.com/jenkinsmvn/jenkinsmvn.git</url>
+    <developerConnection>scm:git:https://github.com/jenkinsmvn/jenkinsmvn.git</developerConnection>
+  </scm>
+
+
   <modules>
     <module>api</module>
     <module>mvn-plugin</module>
